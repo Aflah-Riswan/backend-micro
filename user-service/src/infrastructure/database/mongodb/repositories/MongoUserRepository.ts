@@ -12,6 +12,10 @@ export class MongoUserRepository  implements IUserRepositories {
        const existedUser = await UserModel.findOne({email})
        return existedUser
    }
+   async findById(id: string): Promise<User | null> {
+       const targetUser = await UserModel.findById(id)
+       return targetUser
+   }
    
    
 }

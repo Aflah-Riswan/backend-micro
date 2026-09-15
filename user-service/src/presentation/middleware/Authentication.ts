@@ -2,11 +2,11 @@ import { NextFunction , Request , Response } from "express";
 
 import { ITokenService } from "../../interface/services/TokenService";
 
-export class AuthenticationMiddleware {
+export class Authentication{
 
     constructor( private tokenService : ITokenService){}
   
-    authenticate(req : Request , res : Response , next : NextFunction){
+    authenticate = (req : Request , res : Response , next : NextFunction)=>{
         try {
             const header = req.headers.authorization
             if(!header){
@@ -19,6 +19,7 @@ export class AuthenticationMiddleware {
             req.user = decoded
             next()
         } catch (error) {
+            console.log(" error found : ",error)
               return res.status(401).json({
                 message: "Invalid or expired token"
             });
