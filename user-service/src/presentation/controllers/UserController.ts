@@ -8,11 +8,13 @@ export class UserController {
     ){}
     createUser = async (req : Request , res : Response , next : NextFunction) =>{
        try {
-         const userData : CreateUserInput   = req.body
+        console.log("reached here")
+         const userData : CreateUserInput  = req.body
          const response = await this.CreateUser.execute(userData)
          return res.status(201).json(response)
        } catch (error) {
-        
+        console.log(" error found in user creating : ",error)
+        next(error)
        }
     }
 }

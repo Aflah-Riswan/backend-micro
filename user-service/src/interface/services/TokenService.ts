@@ -1,4 +1,8 @@
+ export interface TokenPayload {
+   userId : string
+ }
+
 export interface ITokenService {
-    generate(userId : string , role : string) : string,
-    verify(token:string) : boolean
+    generateAccessToken(payload: TokenPayload): string;
+    verifyAccessToken(token: string): TokenPayload;
 }

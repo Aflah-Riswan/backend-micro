@@ -1,5 +1,24 @@
 import express from 'express'
-
+import { UserController } from './src/presentation/controllers/UserController'
+import { CreateUser } from './src/application/use-case/CreateUser'
+import  {createUserRoutes } from './src/presentation/routes/UserRoutes'
+import  { MongoUserRepository } from './src/infrastructure/database/mongodb/repositories/MongoUserRepository'
+import  { PasswordService} from './src/infrastructure/services/PasswordService'
+import  { TokenService } from './src/infrastructure/services/TokenService'
 const app = express()
 app.use(express.json())
+
+ 
+const userRepository = new MongoUserRepository()
+const tokenService = new TokenService()
+const passwordService = new PasswordService()
+
+const userUseCase = new CreateUser(
+    userRepository ,
+    passwordService,
+    tokenService
+)
+const userController = new UserController(userUseCase)
+app.use('/user',createUserRoutes(userController))
+
 export default app

@@ -1,7 +1,7 @@
 import { CreateUserData, CreateUserInput } from "../../domain/entities/User";
 import { IUserRepositories } from "../../interface/repositories/IUserRepositories";
 import { IPasswordService } from "../../interface/services/PasswordService";
-import { ITokenService } from "../../interface/services/TokenService";
+import { ITokenService, TokenPayload } from "../../interface/services/TokenService";
 
 export class CreateUser {
     constructor( 
@@ -18,11 +18,15 @@ export class CreateUser {
             password : hashedPassword,
             role : 'user'
         }
+        console.log(" new user : ", newUser)
         const user = await this.userRepo.create(newUser)
-        const { id , role} = user
-        const token = this.tokenService.generate(id , role)
+        const { id } = user
+        const token = this.tokenService.generateAccessToken({
+            userId : id
+        })
+        console.log(" token created  : ",token)
         return {
-            user ,
+            message : 'account created successfully',
             token
         }
     }
