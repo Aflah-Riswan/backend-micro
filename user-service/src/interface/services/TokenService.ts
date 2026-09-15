@@ -1,5 +1,6 @@
  export interface TokenPayload {
-   userId : string
+   userId : string,
+   role : string
  }
 
 export interface ITokenService {

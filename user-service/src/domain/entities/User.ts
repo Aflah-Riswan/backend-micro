@@ -21,3 +21,7 @@ export interface CreateUserData {
     password : string,
     role :  UserRole
 }
+export interface LoginInputData {
+    email : string,
+    password : string
+}

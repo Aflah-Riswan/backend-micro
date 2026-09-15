@@ -7,7 +7,7 @@ export class CreateUser {
     constructor( 
         private userRepo : IUserRepositories,
         private passwordService : IPasswordService,
-        private tokenService : ITokenService
+       
     ){}
    
     async execute(data : CreateUserInput){
@@ -20,14 +20,8 @@ export class CreateUser {
         }
         console.log(" new user : ", newUser)
         const user = await this.userRepo.create(newUser)
-        const { id } = user
-        const token = this.tokenService.generateAccessToken({
-            userId : id
-        })
-        console.log(" token created  : ",token)
         return {
-            message : 'account created successfully',
-            token
+            message : 'account created successfully please login to get token',
         }
     }
 }

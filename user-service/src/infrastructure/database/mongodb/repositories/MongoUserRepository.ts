@@ -8,6 +8,10 @@ export class MongoUserRepository  implements IUserRepositories {
          const createdUser = await UserModel.create(user)
          return createdUser 
    }
+   async findByEmail(email: string): Promise<User | null> {
+       const existedUser = await UserModel.findOne({email})
+       return existedUser
+   }
    
    
 }

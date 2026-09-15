@@ -5,6 +5,7 @@ import  {createUserRoutes } from './src/presentation/routes/UserRoutes'
 import  { MongoUserRepository } from './src/infrastructure/database/mongodb/repositories/MongoUserRepository'
 import  { PasswordService} from './src/infrastructure/services/PasswordService'
 import  { TokenService } from './src/infrastructure/services/TokenService'
+import { LoginUser } from './src/application/use-case/LoginUser'
 const app = express()
 app.use(express.json())
 
@@ -15,10 +16,10 @@ const passwordService = new PasswordService()
 
 const userUseCase = new CreateUser(
     userRepository ,
-    passwordService,
-    tokenService
+    passwordService
 )
-const userController = new UserController(userUseCase)
+const loginUseCase = new LoginUser(userRepository ,passwordService , tokenService)
+const userController = new UserController(userUseCase , loginUseCase)
 app.use('/user',createUserRoutes(userController))
 
 export default app
