@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import app from './server'
 import { connectDB } from './src/infrastructure/database/connection'
 const PORT = process.env.DATABASE_URL
@@ -13,3 +14,4 @@ async function startServer () {
         console.log(" found error im connecting server : ",error)
     }
 }
+startServer()
