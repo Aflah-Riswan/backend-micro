@@ -6,6 +6,7 @@ import  { MongoUserRepository } from './src/infrastructure/database/mongodb/repo
 import  { PasswordService} from './src/infrastructure/services/PasswordService'
 import  { TokenService } from './src/infrastructure/services/TokenService'
 import { LoginUser } from './src/application/use-case/LoginUser'
+import { GetUserById } from './src/application/use-case/GetUserById'
 const app = express()
 app.use(express.json())
 
@@ -19,7 +20,8 @@ const userUseCase = new CreateUser(
     passwordService
 )
 const loginUseCase = new LoginUser(userRepository ,passwordService , tokenService)
-const userController = new UserController(userUseCase , loginUseCase)
+const GetUserByIdUseCase = new GetUserById(userRepository)
+const userController = new UserController(userUseCase , loginUseCase , GetUserByIdUseCase)
 app.use('/user',createUserRoutes(userController))
 
 export default app
