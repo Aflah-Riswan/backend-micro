@@ -3,12 +3,14 @@ import { CreateUser } from "../../application/use-case/CreateUser";
 import { CreateUserInput } from "../../domain/entities/User";
 import { LoginUser } from "../../application/use-case/LoginUser";
 import { GetUserById } from "../../application/use-case/GetUserById";
+import { GetAllUsers } from "../../application/use-case/GetAllUsers";
 
 export class UserController {
     constructor(
         private CreateUser : CreateUser,
         private LoginUser : LoginUser,
-        private GetUserById : GetUserById
+        private GetUserById : GetUserById,
+        private GetAllUsers : GetAllUsers
     ){}
     createUser = async (req : Request , res : Response , next : NextFunction) =>{
        try {
@@ -40,5 +42,28 @@ export class UserController {
             console.log("error found in in getuserNyiD : ",error)
             
         }
+    }
+    getAllUsers = async (req : Request , res : Response , next : NextFunction) =>{
+        try {
+            console.log("reached inside getAllUsers")
+            const response = await this.GetAllUsers.execute()
+            return res.status(201).json({
+                message : 'users details for admin',
+                data : response
+            })
+        } catch (error) {
+            console.log("error found in in getAllUsers : ",error)
+        }
+    }
+    getUserById = async (req : Request , res : Response , next : NextFunction) =>{
+        try {
+            console.log("reached isnide getuserbyid")
+            const id = req.params.id
+            const response = await this.GetUserById.execute(id as string)
+            return res.json(response)
+        } catch (error) {
+            console.log("error found in getuserById ",error)
+        }
+
     }
 }

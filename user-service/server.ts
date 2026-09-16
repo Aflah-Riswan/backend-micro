@@ -7,6 +7,7 @@ import  { PasswordService} from './src/infrastructure/services/PasswordService'
 import  { TokenService } from './src/infrastructure/services/TokenService'
 import { LoginUser } from './src/application/use-case/LoginUser'
 import { GetUserById } from './src/application/use-case/GetUserById'
+import { GetAllUsers } from './src/application/use-case/GetAllUsers'
 const app = express()
 app.use(express.json())
 
@@ -21,7 +22,11 @@ const userUseCase = new CreateUser(
 )
 const loginUseCase = new LoginUser(userRepository ,passwordService , tokenService)
 const GetUserByIdUseCase = new GetUserById(userRepository)
-const userController = new UserController(userUseCase , loginUseCase , GetUserByIdUseCase)
+const GetAllUsersUseCase = new GetAllUsers(userRepository)
+
+const userController = new UserController(
+    userUseCase , loginUseCase , GetUserByIdUseCase , GetAllUsersUseCase
+)
 app.use('/user',createUserRoutes(userController))
 
 export default app

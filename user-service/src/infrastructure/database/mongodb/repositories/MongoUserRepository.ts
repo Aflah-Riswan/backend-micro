@@ -16,6 +16,10 @@ export class MongoUserRepository  implements IUserRepositories {
        const targetUser = await UserModel.findById(id)
        return targetUser
    }
+   async  getAllUsers(): Promise<User[]> {
+       const users = await UserModel.find()
+       return users
+   }
    
    
 }
