@@ -24,7 +24,7 @@ export class PrismaOrderRepository implements IOrderRepository {
             createdAt: response.createdAt
         };
     }
-    async getOrdersById(id: number , userId : string): Promise<Order | null> {
+    async getMyOrdersById(id: number , userId : string): Promise<Order | null> {
         const response = await prisma.order.findUnique({
             where : {
                 id : id,

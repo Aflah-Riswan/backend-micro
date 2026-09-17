@@ -1,12 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
 import type {  CreateOrderUseCase } from "../../application/usecase/CreateOrder.js";
 import type { CreateOrderData } from "../../domain/entities/Order.js";
-import type { GetOrderByIdUseCase } from "../../application/usecase/GetOrdersById.js";
+import type { GetMyOrdersByIdUseCase } from "../../application/usecase/GetOrdersById.js";
 
 export class OrderController {
     constructor(
         private CreateOrder : CreateOrderUseCase,
-        private GetOrderById : GetOrderByIdUseCase
+        private GetMyOrdersById : GetMyOrdersByIdUseCase
     ){}
     createOrder = async (req : Request , res : Response , next : NextFunction) => {
        try {
@@ -32,7 +32,7 @@ export class OrderController {
         try {
             const orderId  = Number(req.params.id) 
             const userId = req.user?.userId
-            const order = await this.GetOrderById.execute(orderId , userId as string)
+            const order = await this.GetMyOrdersById.execute(orderId , userId as string)
             return res.json({
                 message :'fetche succesfully',
                 order
