@@ -18,7 +18,8 @@ model Order {
     id Int @id @default(autoincrement())
     userId String
     item String
-    quantity String
+    quantity Int
+    price Float
     status OrderStatus @default(PENDING)
     createdAt DateTime @default(now())
 }

@@ -14,22 +14,16 @@ export class Authentication {
         });
       }
       const parts = header.split(" ");
-
-      console.log("PARTS:", parts);
-
       const token = parts[1];
 
-      console.log("TOKEN:", token);
       if (!token) {
         return res.status(401).json({
           message: "access denied ",
         });
       }
-      console.log("before verify");
+
 
 const decoded = this.tokenService.verifyAccessToken(token);
-
-console.log("decoded:", decoded);
       req.user = decoded;
       next();
     } catch (error) {
