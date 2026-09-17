@@ -8,5 +8,6 @@ export class CreateOrderUseCase {
     async execute (data : CreateOrderData){
       const response = await this.orderRepo.create(data)
       console.log("response : ",response)
+      return response
     }
 }

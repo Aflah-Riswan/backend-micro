@@ -1,4 +1,4 @@
-import type { CreateOrderData, Order, OrderStatus } from "../../../domain/entities/Order.js";
+import { OrderStatus, type CreateOrderData, type Order } from "../../../domain/entities/Order.js";
 import type { IOrderRepository } from "../../../interface/repository/IOrderRepository.js";
 import { prisma } from "../prismaClient.js";
 
@@ -23,5 +23,25 @@ export class PrismaOrderRepository implements IOrderRepository {
             status: response.status as OrderStatus,
             createdAt: response.createdAt
         };
+    }
+    async getOrdersById(id: number , userId : string): Promise<Order | null> {
+        const response = await prisma.order.findUnique({
+            where : {
+                id : id,
+                userId : userId
+            }
+        })
+        if(!response) {
+            throw new Error('order is not found')
+        }
+        return {
+            id :  response.id,
+            userId : response.userId,
+            item : response.item,
+            price : response.price,
+            quantity : response.quantity,
+            status : response.status as OrderStatus,
+            createdAt : response.createdAt
+        }
     }
 }
