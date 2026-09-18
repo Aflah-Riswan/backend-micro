@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { appendFile } from "fs";
+
 import { AppError } from "../errors/AppError.js";
 
 export const errorHandler = (

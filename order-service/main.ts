@@ -32,6 +32,6 @@ const orderController = new OrderController(
 
 app.use('/order',createOrderRouter(orderController))
 app.use(errorHandler)
-app.listen(5000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log("server is running on 5000")
 })
