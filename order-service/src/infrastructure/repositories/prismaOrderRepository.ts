@@ -56,4 +56,8 @@ export class PrismaOrderRepository implements IOrderRepository {
         })
         return order
     }
+    async getAllOrders(): Promise<Order[]> {
+        const orders = await prisma.order.findMany()
+        return orders 
+    }
 }

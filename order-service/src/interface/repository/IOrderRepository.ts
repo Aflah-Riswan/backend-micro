@@ -7,4 +7,5 @@ export interface IOrderRepository {
     getMyOrdersById (orderId : number , userId : string) : Promise<Order|null>,
     getOrderById (orderId : number) :Promise<Order | null>
     updateOrder (orderId : number, newStatus : string) : Promise<Order>
+    getAllOrders () : Promise<Order[]>
 }
