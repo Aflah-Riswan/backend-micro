@@ -1,7 +1,15 @@
+<<<<<<< Updated upstream
+import { LoginInputData } from "../../domain/entities/User.js";
+import { IUserRepositories } from "../../interface/repositories/IUserRepositories.js";
+import { IPasswordService } from "../../interface/services/PasswordService.js";
+import { ITokenService } from "../../interface/services/TokenService.js";
+=======
 import { LoginInputData } from "../../domain/entities/User";
 import { IUserRepositories } from "../../interface/repositories/IUserRepositories";
 import { IPasswordService } from "../../interface/services/PasswordService";
 import { ITokenService } from "../../interface/services/TokenService";
+import { AppError } from "../../presentation/errors/AppError";
+>>>>>>> Stashed changes
 
 export class LoginUser {
     constructor(
@@ -14,25 +22,20 @@ export class LoginUser {
         const { email , password} = data
         const existingUser = await this.userRepo.findByEmail(email)
         if(!existingUser){
-            return {
-                message : 'user is not existed in this email or invalid email'
-            }
+            throw new AppError(404, "User is not existed in this email");
         }
         const isMatch =  await this.passwordService.compare(password , existingUser.password)
         if(!isMatch){
-            return {
-                message : 'Invalid password try again'
-            }
+            throw new AppError(401, "Invalid Password");
         }
         
         const payload = {
             userId : existingUser.id,
             role : existingUser.role
         }
-        console.log("payload is : ",payload)
+       
        const token = this.tokenService.generateAccessToken(payload)
         return {
-            message : ` hello ${existingUser.name} welcome to home`,
             token
         }
     }

@@ -1,4 +1,4 @@
-import { IPasswordService } from "../../interface/services/PasswordService";
+import { IPasswordService } from "../../interface/services/PasswordService.js";
 import bcrypt from 'bcrypt'
 
 export class PasswordService implements IPasswordService {

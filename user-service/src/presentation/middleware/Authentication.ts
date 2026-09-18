@@ -1,36 +1,46 @@
 import { NextFunction, Request, Response } from "express";
 
-import { ITokenService } from "../../interface/services/TokenService";
+import { ITokenService } from "../../interface/services/TokenService.js";
+import { AppError } from "../errors/AppError.js";
 
 export class Authentication {
-  constructor(private tokenService: ITokenService) {}
+    constructor(
+        private tokenService: ITokenService
+    ) {}
 
-  authenticate = (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const header = req.headers.authorization;
-      if (!header) {
-        return res.json({
-          message: "header is required",
-        });
-      }
-      const parts = header.split(" ");
-      const token = parts[1];
+    authenticate = (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const header = req.headers.authorization;
 
-      if (!token) {
-        return res.status(401).json({
-          message: "access denied ",
-        });
-      }
+            if (!header) {
+                return next(
+                    new AppError(401, "Authorization header is required")
+                );
+            }
 
+            const parts = header.split(" ");
+            const token = parts[1];
 
-const decoded = this.tokenService.verifyAccessToken(token);
-      req.user = decoded;
-      next();
-    } catch (error) {
-      console.log(" error found : ", error);
-      return res.status(401).json({
-        message: "Invalid or expired token",
-      });
-    }
-  };
+            if (!token) {
+                return next(
+                    new AppError(401, "Access token is required")
+                );
+            }
+
+            const decoded = this.tokenService.verifyAccessToken(token);
+
+            req.user = decoded;
+
+            next();
+
+        } catch (error) {
+            next(
+                new AppError(401, "Invalid or expired token")
+            );
+        }
+    };
 }

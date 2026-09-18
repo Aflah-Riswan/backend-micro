@@ -1,25 +1,19 @@
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "../errors/AppError";
 
 export class Authorization {
     authorize = (req : Request , res : Response , next : NextFunction) => {
-        try {
+        
             const header = req.headers.authorization
             if(!header){
-                return res.json({
-                    message : ' authentication is required'
-                })
+               throw new Error("header is required")
             }
             if(req.user?.role !== 'admin'){
-               return res.json({
-                 message  :'access denied'
-               })
+                return next(
+                new AppError(403, "Access denied")
+            );
             }
             next()
-        } catch (error) {
-            console.log(" found error  in authorization : ",error)
-            return res.json({
-                message : " found error  in authorization : "
-            })
-        }
+        
     }
 }
