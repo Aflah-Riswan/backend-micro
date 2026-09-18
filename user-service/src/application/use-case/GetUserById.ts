@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
 import { IUserRepositories } from "../../interface/repositories/IUserRepositories.js";
-=======
-import { IUserRepositories } from "../../interface/repositories/IUserRepositories";
-import { AppError } from "../../presentation/errors/AppError";
->>>>>>> Stashed changes
+import { AppError } from "../../presentation/errors/AppError.js";
 
 export class GetUserById {
     constructor( private userRepo : IUserRepositories){}

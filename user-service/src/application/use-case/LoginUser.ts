@@ -1,15 +1,9 @@
-<<<<<<< Updated upstream
+
 import { LoginInputData } from "../../domain/entities/User.js";
 import { IUserRepositories } from "../../interface/repositories/IUserRepositories.js";
 import { IPasswordService } from "../../interface/services/PasswordService.js";
 import { ITokenService } from "../../interface/services/TokenService.js";
-=======
-import { LoginInputData } from "../../domain/entities/User";
-import { IUserRepositories } from "../../interface/repositories/IUserRepositories";
-import { IPasswordService } from "../../interface/services/PasswordService";
-import { ITokenService } from "../../interface/services/TokenService";
-import { AppError } from "../../presentation/errors/AppError";
->>>>>>> Stashed changes
+import { AppError } from "../../presentation/errors/AppError.js";
 
 export class LoginUser {
     constructor(

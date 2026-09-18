@@ -1,4 +1,4 @@
-import { CreateUserData, User } from "../../domain/entities/User";
+import { CreateUserData, User } from "../../domain/entities/User.js";
 
 export interface IUserRepositories {
     findById(id: string): Promise<User | null>;
