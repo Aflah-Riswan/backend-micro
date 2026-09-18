@@ -21,6 +21,7 @@ export class Authenticate {
            }
            const decoded = this.tokenService.verify(token)
            req.user = decoded
+           req.accessToken = token
            next()
         } catch (error) {
             console.log(" error found in authenticate  : ",error)

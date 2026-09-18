@@ -1,7 +1,7 @@
 import type { CreateOrderData } from "../../domain/entities/Order.js";
 import type { IOrderRepository } from "../../interface/repository/IOrderRepository.js";
 
-export class CreateOrderUseCase {
+export class CreateOrder {
     constructor(
         private orderRepo : IOrderRepository
     ){}

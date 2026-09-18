@@ -1,9 +1,5 @@
-export enum OrderStatus {
-     PENDING = "PENDING",
-    PROCESSING = "PROCESSING",
-    SHIPPED = "SHIPPED",
-    DELIVERED = "DELIVERED"
-}
+import { OrderStatus } from "@prisma/client"
+
 
 export interface Order {
     id : number,
@@ -20,4 +16,11 @@ export interface CreateOrderData {
     quantity : number,
     userId : string,
     price : number
+}
+
+export interface UpdateOrderInput {
+    orderId : number,
+    userId : string ,
+    status : OrderStatus,
+    accessToken : string
 }
