@@ -1,9 +1,9 @@
 import {Request , Response, NextFunction } from "express";
-import { CreateUser } from "../../application/use-case/CreateUser";
-import { CreateUserInput } from "../../domain/entities/User";
-import { LoginUser } from "../../application/use-case/LoginUser";
-import { GetUserById } from "../../application/use-case/GetUserById";
-import { GetAllUsers } from "../../application/use-case/GetAllUsers";
+import { CreateUser } from "../../application/use-case/CreateUser.js";
+import { CreateUserInput } from "../../domain/entities/User.js";
+import { LoginUser } from "../../application/use-case/LoginUser.js";
+import { GetUserById } from "../../application/use-case/GetUserById.js";
+import { GetAllUsers } from "../../application/use-case/GetAllUsers.js";
 
 export class UserController {
     constructor(

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { ITokenService } from "../../interface/services/TokenService";
+import { ITokenService } from "../../interface/services/TokenService.js";
 
 export class Authentication {
   constructor(private tokenService: ITokenService) {}

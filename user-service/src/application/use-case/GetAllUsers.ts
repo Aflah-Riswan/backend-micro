@@ -1,4 +1,4 @@
-import { IUserRepositories } from "../../interface/repositories/IUserRepositories";
+import { IUserRepositories } from "../../interface/repositories/IUserRepositories.js";
 
 export class GetAllUsers {
   constructor(private userRepo :  IUserRepositories){}

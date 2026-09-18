@@ -1,6 +1,6 @@
-import { CreateUserData, User } from "../../../../domain/entities/User";
-import { IUserRepositories } from "../../../../interface/repositories/IUserRepositories";
-import UserModel from "../models/UserModel";
+import { CreateUserData, User } from "../../../../domain/entities/User.js";
+import { IUserRepositories } from "../../../../interface/repositories/IUserRepositories.js";
+import UserModel from "../models/UserModel.js";
 
 export class MongoUserRepository  implements IUserRepositories {
 

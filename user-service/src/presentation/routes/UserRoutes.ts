@@ -1,8 +1,8 @@
-import { UserController } from "../controllers/UserController";
+import { UserController } from "../controllers/UserController.js";
 import express from 'express'
-import { Authentication } from "../middleware/Authentication";
-import { TokenService } from "../../infrastructure/services/TokenService";
-import { Authorization } from "../middleware/Authorization";
+import { Authentication } from "../middleware/Authentication.js";
+import { TokenService } from "../../infrastructure/services/TokenService.js";
+import { Authorization } from "../middleware/Authorization.js";
 
 
 const tokenService = new TokenService()

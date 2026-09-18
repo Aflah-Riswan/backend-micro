@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken'
-import { ITokenService, TokenPayload } from "../../interface/services/TokenService";
+import { ITokenService, TokenPayload } from "../../interface/services/TokenService.js";
 
 export class TokenService implements ITokenService {
     private readonly accessToken : string
