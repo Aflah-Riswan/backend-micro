@@ -1,17 +1,22 @@
 import { NextFunction, Request, Response } from "express";
 
+<<<<<<< Updated upstream
 import { ITokenService } from "../../interface/services/TokenService.js";
+=======
+import { ITokenService } from "../../interface/services/TokenService";
+import { AppError } from "../errors/AppError";
+>>>>>>> Stashed changes
 
 export class Authentication {
   constructor(private tokenService: ITokenService) {}
 
   authenticate = (req: Request, res: Response, next: NextFunction) => {
-    try {
+    
       const header = req.headers.authorization;
       if (!header) {
-        return res.json({
-          message: "header is required",
-        });
+       return next(
+          new AppError(401, "Authorization header is required")
+        );
       }
       const parts = header.split(" ");
 
@@ -21,22 +26,20 @@ export class Authentication {
 
       console.log("TOKEN:", token);
       if (!token) {
-        return res.status(401).json({
-          message: "access denied ",
-        });
+        return next(
+          new AppError(401, "Access token is required")
+        );
       }
       console.log("before verify");
 
+<<<<<<< Updated upstream
 const decoded = this.tokenService.verifyAccessToken(token);
 
 console.log("decoded:", decoded);
+=======
+    const decoded = this.tokenService.verifyAccessToken(token);
+>>>>>>> Stashed changes
       req.user = decoded;
       next();
-    } catch (error) {
-      console.log(" error found : ", error);
-      return res.status(401).json({
-        message: "Invalid or expired token",
-      });
-    }
   };
 }

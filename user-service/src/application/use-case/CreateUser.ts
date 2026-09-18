@@ -1,7 +1,15 @@
+<<<<<<< Updated upstream
 import { CreateUserData, CreateUserInput } from "../../domain/entities/User.js";
 import { IUserRepositories } from "../../interface/repositories/IUserRepositories.js";
 import { IPasswordService } from "../../interface/services/PasswordService.js";
 import { ITokenService, TokenPayload } from "../../interface/services/TokenService.js";
+=======
+import { CreateUserData, CreateUserInput } from "../../domain/entities/User";
+import { IUserRepositories } from "../../interface/repositories/IUserRepositories";
+import { IPasswordService } from "../../interface/services/PasswordService";
+import { ITokenService, TokenPayload } from "../../interface/services/TokenService";
+import { AppError } from "../../presentation/errors/AppError";
+>>>>>>> Stashed changes
 
 export class CreateUser {
     constructor( 
@@ -11,6 +19,10 @@ export class CreateUser {
     ){}
    
     async execute(data : CreateUserInput){
+        const existingUser = await this.userRepo.findByEmail(data.email);
+        if(existingUser){
+              throw new AppError(409, "Email already exists");
+        }
         const { password } = data
         const hashedPassword = await this.passwordService.hash(password)
         const newUser : CreateUserData = {
@@ -18,10 +30,8 @@ export class CreateUser {
             password : hashedPassword,
             role : 'user'
         }
-        console.log(" new user : ", newUser)
+        
         const user = await this.userRepo.create(newUser)
-        return {
-            message : 'account created successfully please login to get token',
-        }
+        return user
     }
 }

@@ -1,13 +1,16 @@
+<<<<<<< Updated upstream
 import { IUserRepositories } from "../../interface/repositories/IUserRepositories.js";
+=======
+import { IUserRepositories } from "../../interface/repositories/IUserRepositories";
+import { AppError } from "../../presentation/errors/AppError";
+>>>>>>> Stashed changes
 
 export class GetUserById {
     constructor( private userRepo : IUserRepositories){}
     async execute(id : string){
        const targetUser = await this.userRepo.findById(id)
        if(!targetUser){
-        return  {
-           message : 'user is not existing'
-        }
+        throw new AppError(409, "Email already exists");
        }
        return targetUser
     }

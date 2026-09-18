@@ -8,8 +8,12 @@ import  { TokenService } from './src/infrastructure/services/TokenService'
 import { LoginUser } from './src/application/use-case/LoginUser'
 import { GetUserById } from './src/application/use-case/GetUserById'
 import { GetAllUsers } from './src/application/use-case/GetAllUsers'
+<<<<<<< Updated upstream
 import { UserGrpcServer } from './src/infrastructure/grpc/UserGrpcServer.js'
 
+=======
+import { errorHandler } from './src/presentation/middleware/ErrorHandler'
+>>>>>>> Stashed changes
 const app = express()
 app.use(express.json())
 
@@ -38,5 +42,5 @@ const userController = new UserController(
     userUseCase , loginUseCase , GetUserByIdUseCase , GetAllUsersUseCase
 )
 app.use('/user',createUserRoutes(userController))
-
+app.use(errorHandler)
 export default app
