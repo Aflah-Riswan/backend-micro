@@ -10,8 +10,6 @@ const authMiddleware = new Authentication(tokenService)
 const authorizationMiddleware = new Authorization()
 export function createUserRoutes(controller : UserController){
     const router = express.Router()
-    router.post('/register',controller.createUser)
-    router.post('/login',controller.loginUser)
     router.get('/all',authMiddleware.authenticate,authorizationMiddleware.authorize ,controller.getAllUsers )
     router.get('/me',authMiddleware.authenticate , controller.getUserProfile)
     router.get('/:id',authMiddleware.authenticate , authorizationMiddleware.authorize , controller.getUserById)

@@ -33,6 +33,7 @@ export class UserController {
             { success: true, message: "Login successful", data: result 
             });
        } catch (error) {
+        console.log("errror found in login ",error)
           next(error)
        }
     }

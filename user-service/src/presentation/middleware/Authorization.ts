@@ -8,6 +8,10 @@ export class Authorization {
             if(!header){
                throw new Error("header is required")
             }
+    
+                console.log(req.user)
+            console.log("reached here....")
+
             if(req.user?.role !== 'admin'){
                 return next(
                 new AppError(403, "Access denied")

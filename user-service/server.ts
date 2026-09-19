@@ -2,6 +2,7 @@ import express from 'express'
 import { UserController } from './src/presentation/controllers/UserController'
 import { CreateUser } from './src/application/use-case/CreateUser'
 import  {createUserRoutes } from './src/presentation/routes/UserRoutes'
+import { createAuthRoutes } from './src/presentation/routes/AuthRoutes.js'
 import  { MongoUserRepository } from './src/infrastructure/database/mongodb/repositories/MongoUserRepository'
 import  { PasswordService} from './src/infrastructure/services/PasswordService'
 import  { TokenService } from './src/infrastructure/services/TokenService'
@@ -30,14 +31,18 @@ const loginUseCase = new LoginUser(userRepository ,passwordService , tokenServic
 const GetUserByIdUseCase = new GetUserById(userRepository)
 const GetAllUsersUseCase = new GetAllUsers(userRepository)
 
+
+const userController = new UserController(
+    userUseCase , loginUseCase , GetUserByIdUseCase , GetAllUsersUseCase
+)
+app.use('/auth',createAuthRoutes(userController))
+app.use('/users',createUserRoutes(userController))
+app.use(errorHandler)
+
 const grpcServer = new UserGrpcServer(
     tokenService,
     GetUserByIdUseCase  
 )
 grpcServer.start(5001)
-const userController = new UserController(
-    userUseCase , loginUseCase , GetUserByIdUseCase , GetAllUsersUseCase
-)
-app.use('/user',createUserRoutes(userController))
-app.use(errorHandler)
+
 export default app

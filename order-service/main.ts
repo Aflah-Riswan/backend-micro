@@ -30,7 +30,7 @@ const orderController = new OrderController(
     getOrdersById
 )
 
-app.use('/order',createOrderRouter(orderController))
+app.use('/orders',createOrderRouter(orderController))
 app.use(errorHandler)
 app.listen(process.env.PORT,()=>{
     console.log("server is running on 5000")

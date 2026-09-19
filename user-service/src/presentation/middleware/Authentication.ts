@@ -32,7 +32,7 @@ export class Authentication {
             }
 
             const decoded = this.tokenService.verifyAccessToken(token);
-
+            console.log( " decoded " ,decoded)
             req.user = decoded;
 
             next();
