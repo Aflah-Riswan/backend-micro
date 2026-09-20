@@ -1,7 +1,7 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
 
 export const userAuthProxy = createProxyMiddleware({
-    target: "http://localhost:4000",
+    target:  process.env.USER_SERVICE_URL,
     changeOrigin: true,
 
     pathRewrite: {
@@ -10,7 +10,7 @@ export const userAuthProxy = createProxyMiddleware({
 });
 
 export const userProxy = createProxyMiddleware({
-    target: "http://localhost:4000",
+    target:  process.env.USER_SERVICE_URL,
     changeOrigin: true,
 
     pathRewrite: {

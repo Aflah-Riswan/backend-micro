@@ -1,9 +1,9 @@
 import express from "express";
 import morgan from 'morgan'
-import { rateLimiter } from "./middleware/rateLimiter";
-import { gatewayAuth } from "./middleware/gatewayAuth";
-import {userProxy , userAuthProxy} from './routes/userProxy'
-import { orderProxy } from "./routes/orderProxy";
+import { rateLimiter } from "./middleware/rateLimiter.js";
+import { gatewayAuth } from "./middleware/gatewayAuth.js";
+import {userProxy , userAuthProxy} from './routes/userProxy.js'
+import { orderProxy } from "./routes/orderProxy.js";
 export const app = express()
 app.use(morgan(":method :url :status :response-time ms"))
 app.use(rateLimiter)

@@ -23,7 +23,7 @@ export class UserGrpcClient implements IUserGrpcClient {
     private client : any
    constructor(){
     this.client = new userProto.user.UserService(
-        "localhost:5001",
+        process.env.USER_SERVICE_GRPC_URL as string,
         grpc.credentials.createInsecure()
     )
    }

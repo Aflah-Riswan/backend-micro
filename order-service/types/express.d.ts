@@ -1,12 +1,12 @@
-import type { TokenPayload } from "../src/interface/services/ITokenService.ts"
+import type { TokenPayload } from "../src/interface/services/ITokenService.js";
 
-
- declare global {
+declare global {
     namespace Express {
         interface Request {
-            user?: TokenPayload,
-            accessToken?: string
+            user?: TokenPayload;
+            accessToken?: string;
         }
     }
- }
- export  {}
+}
+
+export {};
