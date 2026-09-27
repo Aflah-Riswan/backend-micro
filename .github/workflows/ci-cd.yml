@@ -55,18 +55,17 @@ jobs:
       - name: Check Kubernetes connection
         run: kubectl cluster-info
 
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f k8s/
+      - name: Deploy Kubernetes manifests
+        run: kubectl apply -f k8s/
 
-          kubectl set image deployment/api-gateway \
-            api-gateway=${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.sha }}
+      - name: Update API Gateway image
+        run: kubectl set image deployment/api-gateway api-gateway=${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.sha }}
 
-          kubectl set image deployment/user-service \
-            user-service=${{ secrets.DOCKERHUB_USERNAME }}/user-service:${{ github.sha }}
+      - name: Update User Service image
+        run: kubectl set image deployment/user-service user-service=${{ secrets.DOCKERHUB_USERNAME }}/user-service:${{ github.sha }}
 
-          kubectl set image deployment/order-service \
-            order-service=${{ secrets.DOCKERHUB_USERNAME }}/order-service:${{ github.sha }}
+      - name: Update Order Service image
+        run: kubectl set image deployment/order-service order-service=${{ secrets.DOCKERHUB_USERNAME }}/order-service:${{ github.sha }}
 
       - name: Wait for API Gateway rollout
         run: kubectl rollout status deployment/api-gateway
@@ -80,6 +79,6 @@ jobs:
       - name: Rollback deployments
         if: failure()
         run: |
-          kubectl rollout undo deployment/api-gateway || true
-          kubectl rollout undo deployment/user-service || true
-          kubectl rollout undo deployment/order-service || true
+          kubectl rollout undo deployment/api-gateway
+          kubectl rollout undo deployment/user-service
+          kubectl rollout undo deployment/order-service
