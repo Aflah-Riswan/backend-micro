@@ -23,7 +23,8 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: module-33-api-gateway:latest
+          image: aflu2004/api-gateway:latest
+
 
           ports:
             - containerPort: 3000

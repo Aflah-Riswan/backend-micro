@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: module-33-user-service:latest
+          image: aflu2004/user-service:latest
 
           ports:
             - containerPort: 4000

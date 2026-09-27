@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: module-33-order-service:latest
+          image: aflu2004/order-service:latest
 
           ports:
             - containerPort: 5000

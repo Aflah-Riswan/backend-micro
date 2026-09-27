@@ -39,3 +39,37 @@ jobs:
         run: |
           docker push \
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
+
+
+  deploy:
+
+    needs: build-and-push
+
+    runs-on: self-hosted
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check Kubernetes connection
+        run: kubectl cluster-info
+
+      - name: Deploy to Kubernetes
+        run: kubectl apply -f k8s/
+
+      - name: Wait for API Gateway rollout
+        run: kubectl rollout status deployment/api-gateway
+
+      - name: Wait for User Service rollout
+        run: kubectl rollout status deployment/user-service
+
+      - name: Wait for Order Service rollout
+        run: kubectl rollout status deployment/order-service
+
+      - name: Rollback deployments
+        if: failure()
+        run: |
+          kubectl rollout undo deployment/api-gateway
+          kubectl rollout undo deployment/user-service
+          kubectl rollout undo deployment/order-service
