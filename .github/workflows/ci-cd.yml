@@ -6,7 +6,9 @@ on:
       - main
 
 jobs:
+
   build-and-push:
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,6 +19,7 @@ jobs:
           - order-service
 
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -34,13 +37,18 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:${{ github.sha }}
+          docker push \
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:${{ github.sha }}
+
 
   deploy:
+
     needs: build-and-push
+
     runs-on: self-hosted
 
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -50,26 +58,27 @@ jobs:
       - name: Deploy Kubernetes manifests
         run: kubectl apply -f k8s/
 
-      - name: Update Service Images
-        run: |
-          kubectl set image deployment/api-gateway api-gateway=${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.sha }}
-          kubectl set image deployment/user-service user-service=${{ secrets.DOCKERHUB_USERNAME }}/user-service:${{ github.sha }}
-          kubectl set image deployment/order-service order-service=${{ secrets.DOCKERHUB_USERNAME }}/order-service:${{ github.sha }}
+      - name: Update API Gateway image
+        run: kubectl set image deployment/api-gateway api-gateway=${{ secrets.DOCKERHUB_USERNAME }}/api-gateway:${{ github.sha }}
+
+      - name: Update User Service image
+        run: kubectl set image deployment/user-service user-service=${{ secrets.DOCKERHUB_USERNAME }}/user-service:${{ github.sha }}
+
+      - name: Update Order Service image
+        run: kubectl set image deployment/order-service order-service=${{ secrets.DOCKERHUB_USERNAME }}/order-service:${{ github.sha }}
 
       - name: Wait for API Gateway rollout
-        run: kubectl rollout status deployment/api-gateway --timeout=300s
+        run: kubectl rollout status deployment/api-gateway
 
       - name: Wait for User Service rollout
-        run: kubectl rollout status deployment/user-service --timeout=300s
+        run: kubectl rollout status deployment/user-service
 
       - name: Wait for Order Service rollout
-        run: kubectl rollout status deployment/order-service --timeout=300s
+        run: kubectl rollout status deployment/order-service
 
       - name: Rollback deployments
         if: failure()
-        shell: powershell
         run: |
           kubectl rollout undo deployment/api-gateway
           kubectl rollout undo deployment/user-service
           kubectl rollout undo deployment/order-service
-          $host.SetShouldExit(1)
