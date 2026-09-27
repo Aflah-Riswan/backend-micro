@@ -81,4 +81,4 @@ jobs:
         run: |
           kubectl rollout undo deployment/api-gateway
           kubectl rollout undo deployment/user-service
-          kubectl rollout undo deployment/order-service
+          kubectl rollout undo deployment/order-service 
