@@ -11,10 +11,12 @@ import { GetUserById } from './application/use-case/GetUserById.js'
 import { GetAllUsers } from './application/use-case/GetAllUsers.js'
 import { UserGrpcServer } from './infrastructure/grpc/UserGrpcServer.js'
 import { errorHandler } from './presentation/middleware/ErrorHandler.js'
+import { register } from './infrastructure/monitoring/metrics.js'
+import { metricsMiddleware } from './infrastructure/monitoring/metricsMiddleware.js'
 
 const app = express()
 app.use(express.json())
-
+app.use(metricsMiddleware)
  
 const userRepository = new MongoUserRepository()
 const tokenService = new TokenService()
@@ -38,7 +40,10 @@ const userController = new UserController(
 app.use('/auth',createAuthRoutes(userController))
 app.use('/users',createUserRoutes(userController))
 app.use(errorHandler)
-
+app.get('/metrics',async (req, res) => {
+    res.set('Content-Type', register.contentType)
+    res.end(await register.metrics())
+})
 const grpcServer = new UserGrpcServer(
     tokenService,
     GetUserByIdUseCase  
